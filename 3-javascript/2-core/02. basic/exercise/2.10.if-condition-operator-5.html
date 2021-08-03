@@ -2,27 +2,17 @@
 
 <body>
   <script>
-    // 어떤 조건에 따라서 코드를 분기하고 싶을 때
+    // 연산자의 우선순위
+    // 단항 > 이항 > 삼항
+    // 이항: 산술(+,/) > 비교(>,==) > 논리(&&,||)
 
-    // '2015'
-    let year = prompt('ES2015 명세는 몇 년도인가?');
+    let age = 19;
 
-    // if(조건식) 실행문
-    // 조건식이 true이면 실행문이 실행됨
-    // 조건식이 false이면 실행문이 실행 안 됨
+    // 조건식 ? 조건식이 true일 때 반환값 : 조건식이 false일 때 반환값
+    let accessAllowed = (age > 18) ? "ok" : "no";
 
-    // if (year == 2015) alert('정답입니다!');
-    // if (Number(year) === 2015) alert('정답입니다!');
-
-    // if (조건식) { 실행문1; 실행문2; }
-    // { ... }: block
-
-    // year의 값이 2015와 같습니까? x 
-    // year의 값이 2015와 같습니까? 같으면 결과값이 true네요, 실행
-    if (year == 2015) {
-      alert('정답입니다!');
-      alert('아주 똑똑하시네요!');
-    }
+    console.log((age < 18) ? "ok" : "no");
+    console.log(accessAllowed);
   </script>
 </body>
 
