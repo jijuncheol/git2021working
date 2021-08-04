@@ -1,0 +1,29 @@
+<html>
+
+<body>
+  <script>
+    // 입력 값
+    let n = 10;
+
+    // 2부터 입력받은 숫자까지 증가
+    for (let i = 2; i <= n; i++) {
+
+      // 소수인지 아닌지를 기록할 변수(flag)
+      let isPrime = true;
+      // 예) i==5, j는 2~4
+      // 예) i==8, j는 2~7 
+      // 2부터 현재숫자보다 작은 수까지 반복
+      for (let j = 2; j < i; j++) {
+        // 현재 숫자보다 작은 수로 나눠진다면 소수가 아님
+        if (i % j == 0) {
+          isPrime = false;
+          break;
+        }
+      }
+      // 소수이면 출력
+      isPrime && console.log(i);
+    }
+  </script>
+</body>
+
+</html>
