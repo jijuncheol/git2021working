@@ -1,0 +1,20 @@
+<html>
+
+<body>
+  <script>
+    // 삼각형 출력하기 - pattern 2
+    let result = "";
+    for (let i = 0; i < 5; i++) {
+      for (let a = 0; a <= i; a++) {
+        result += " ";        // 빈칸 만들기
+      }
+      for (let b = 5; b > i; b--) { // 증가하면서 출력
+        result += "*";
+      }
+      result += "\n";
+    }
+    console.log(result);
+  </script>
+</body>
+
+</html>
