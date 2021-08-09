@@ -3,16 +3,35 @@
 <body>
   <script>
     let arr = ["Jazz", "Blues"];
-    arr.push("Rock-n-Roll");
-    console.log(arr.shift());
-    arr.unshift("Rap", "Reggae");
-
     console.log(arr);
-    Jazz, Blues
-    Jazz, Blues, Rock - n - Roll
-    Jazz, Classics, Rock - n - Roll
-    Classics, Rock - n - Roll
-    Rap, Reggae, Classics, Rock - n - Roll
+
+    arr.push("Rock-n-Roll");
+    console.log(arr);
+
+    // 배열 중간 요소 바꾸기
+    arr[Math.floor((arr.length - 1) / 2)] = "Classics"
+    console.log(arr);
+
+    console.log(arr.shift());
+    console.log(arr);
+
+    // arr.unshift("Rap", "Reggae");
+
+    // for (let addItem of ["Reggae", "Rap"]) {
+    //   arr.unshift(addItem);
+    // }
+
+    // 5-1 배열 앞치기 뒤에 나옴
+    // 배열.concat(배열1, 배열2....)
+    // 합쳐진 새로운 배열을 반환함.
+    arr = ["Rap", "Reggae"].concat(arr);
+    console.log(arr);
+
+    // Jazz, Blues
+    // Jazz, Blues, Rock - n - Roll
+    // Jazz, Classics, Rock - n - Roll
+    // Classics, Rock - n - Roll
+    // Rap, Reggae, Classics, Rock - n - Roll
   </script>
 </body>
 
