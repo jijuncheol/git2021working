@@ -1,0 +1,42 @@
+<html>
+
+<body>
+  <script>
+    // 컨텍스트(Content, 문맥):
+    // 자바스크립트에서 this는 런타임 (실행시점의 컨텍스트)에 결정됩니다.
+    // 메서드가 어디서 정의되었는지에 상관없이
+    // this는 `점 앞의` 객체가 무엇인가에 따라 `자유롭게` 결정됩니다.
+    // function makeUser() {
+    //   return {
+    //     name: "John",
+    //     ref: this
+    //   };
+    // };
+
+    // let user = makeUser();
+    // user.ref는 window 객체 (js 최상위객체)이고
+    // makeUser는 window 객체에 함수로 생성된 것임
+
+    // alert(user.ref.name); // 결과가 어떻게 될까요?
+
+    // this값이 호출시점에 결정됨
+    // makeUser은 함수로 호출 undefined가 나옴
+
+    function makeUser() {
+      return {
+        name: "John",
+        ref() {   // ref 프로퍼티를 메서르도 만듬
+          return this;
+        }
+      }
+    }
+
+    let user = makeUser();
+
+    alert(user.ref().name);
+
+
+  </script>
+</body>
+
+</html>

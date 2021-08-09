@@ -1,0 +1,29 @@
+<html>
+
+<body>
+  <script>
+    var a = 0;
+    var b = 0;
+    let calculator = {
+
+      read() {
+        this.a = +prompt("1번")
+        this.b = +prompt("2번")
+      },
+      sum() {
+        return this.a + this.b
+        //return a + b;
+      },
+      mul() {
+        return this.a * this.b
+        //return a * b;
+      }
+    };
+
+    calculator.read();
+    alert(calculator.sum());
+    alert(calculator.mul());
+  </script>
+</body>
+
+</html>

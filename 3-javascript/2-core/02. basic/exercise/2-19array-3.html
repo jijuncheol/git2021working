@@ -1,0 +1,16 @@
+<html>
+
+<body>
+  <script>
+    let arr = ["a", "b"];
+
+    arr.push(function () {
+      alert(this);
+    })
+
+    arr[2](); // ?
+    // 배열에 함수가 추가되서 출력하면 함수가 출력된다?
+  </script>
+</body>
+
+</html>
