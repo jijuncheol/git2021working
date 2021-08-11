@@ -1,0 +1,27 @@
+<html>
+
+<body>
+  <script>
+    // var str = "$120"
+    // var regex = /[^0-9]/g;
+    // var result = str.replace(regex, "");
+
+    // console.log(result);
+
+    function extractCurrencyValue(str) {
+      let result = "";
+
+      // 한글자씩 isNaN 테스트
+      for (let chr of str) {
+        // 숫자변환 후 NaN이 아닌 글자만 결과 문자열에 추가함
+        if (!isNaN(+chr)) {
+          result += chr;
+        }
+      }
+      return +result;
+    }
+    console.log(extractCurrencyValue('$120'));
+  </script>
+</body>
+
+</html>

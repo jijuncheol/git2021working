@@ -1,0 +1,34 @@
+<html>
+
+<body>
+  <script>
+    // function checkSpam(str) {
+    //   let Str = str.toLowerCase();
+
+    //   return Str.includes('viagra')
+    //   return Str.includes('xxx');
+    // }
+
+    // console.log(checkSpam('buy ViAgRA now'))
+    // console.log(checkSpam('free xxxxx'))
+    // console.log(checkSpam("innocent rabbit"))
+
+    function checkSpam(str) {
+      // 탐색할 문자열을 모두 소문자로 변환
+      let strLower = str.toLowerCase();
+      // 문자열에 아래의 키워드가 포함되어 있는지
+      for (let keyword of ["viagra", "xxx"]) {
+        if (strLower.includes(keyword)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    console.log(checkSpam('buy ViAgRA now'))
+    console.log(checkSpam('free xxxxx'))
+    console.log(checkSpam("innocent rabbit"))
+  </script>
+</body>
+
+</html>

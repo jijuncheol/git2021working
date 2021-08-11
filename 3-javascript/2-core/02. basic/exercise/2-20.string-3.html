@@ -1,0 +1,23 @@
+<html>
+
+<body>
+  <script>
+    // let length = 20;
+    // let str = "What I'd like to tell on this topic is:"
+    // if (str.length > length) {
+    //   str = str.substr(0, length - 0) + "...";
+    // }
+    // console.log(str);
+
+    function truncate(str, maxlength) {
+      return str.length > maxlength - 1
+        ? str.substr(0, maxlength - 1) + "..."
+        : str;
+    }
+
+    console.log(truncate("What I'd like to tell on this topic is:", 20));
+    console.log(truncate("Hi everyone!", 20));
+  </script>
+</body>
+
+</html>

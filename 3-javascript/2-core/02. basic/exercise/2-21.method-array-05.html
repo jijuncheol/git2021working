@@ -1,0 +1,30 @@
+<html>
+
+<body>
+  <script>
+    // function copySorted(arr) {
+    //   return arr.slice().sort();
+    // }
+    // let arr = ["HTML", "JavaScript", "CSS"];
+
+    // let sorted = copySorted(arr);
+
+    // console.log(arr)
+
+    function copySorted(arr) {
+      // 매개변수로 받은 배열을 복제
+      let copy = [...arr];
+      // 문자열 순서대로 정렬
+      return copy.sort();
+      // return copy.sort((a,b) => a.localeCompare(b));
+    }
+
+    let arr = ["HTML", "JavaScript", "CSS"];
+    let sorted = copySorted(arr);
+
+    console.log(sorted);
+    console.log(arr)
+  </script>
+</body>
+
+</html>

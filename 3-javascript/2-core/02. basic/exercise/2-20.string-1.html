@@ -1,0 +1,22 @@
+<html>
+
+<body>
+  <script>
+    // const str = "john"
+    // const firstChar = str[0];  // 첫 글자 찾기
+    // const firstCharUpper = firstChar.toUpperCase(); // 대문자 변환
+    // const leftChar = str.slice(1, str.length); // 나머지 글자 찾기
+    // const result = firstCharUpper + leftChar; // 첫 글자와 나머지 글자 붙이기
+
+    // console.log(result);
+
+    function ucFirst(str) {
+      // 첫번째 글자를 대문자 + 두번째 글자부터 마지막글자까지 자름
+      return str[0].toUpperCase() + str.substr(1);
+    }
+
+    console.log(ucFirst("John"));
+  </script>
+</body>
+
+</html>

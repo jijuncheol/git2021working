@@ -1,0 +1,45 @@
+<html>
+
+<body>
+  <script>
+    // const arr = ["Hare", "Krishna", "Hare", "Krishna",
+    //   "Krishna", "Krishna", "Hare", "Hare", ":-O"];
+
+    // let uniqueArr = [];
+    // arr.forEach((element) => {
+    //   if (!uniqueArr.includes(element)) {
+    //     uniqueArr.push(element);
+    //   }
+    // });
+
+    function unique(arr) {
+      // let set = new Set(arr);
+      return [...new Set(arr)];
+    }
+
+    let strings = ["Hare", "Krishna", "Hare", "Krishna",
+      "Krishna", "Krishna", "Hare", "Hare", ":-O"
+    ];
+    // 중복이 없이 저장 가능함.
+    let set = new Set();
+    set.add("lee");
+    set.add("hong");
+    set.add("lee");
+    set.add("kim");
+
+    // for (let value of set) {
+    //   console.log(value);
+    // }
+    // console.log(set.size);
+
+    // new Set(배열)
+    let set1 = new Set(strings);
+    for (let value of set1) {
+      console.log(value);
+    }
+    console.log(set1.size);
+
+  </script>
+</body>
+
+</html>

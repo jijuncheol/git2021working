@@ -1,0 +1,32 @@
+<html>
+
+<body>
+  <script>
+    // let arr = [5, 3, 8, 1];
+
+    // filterRangeInPlace(arr, 1, 4);
+
+    function filterRangeInPlace(arr, a, b) {
+      // 사이에 포함되는 않는 숫자들만 필터링
+      let result = arr.filter(item => item < a || item > b);
+
+      // 안 되는 상황
+      // arr = result;
+
+      // 포함되지 않는 숫자들을 반복
+      for (let item of result) {
+        // 입력 받은 배열에서 해당 숫자들을 제거
+        if (arr.includes(item)) {
+          // 입력 받은 배열에서 해당 숫자를 제거
+          arr.splice(arr.indexOf(item), 1);
+        }
+      }
+    }
+
+    let arr = [5, 3, 8, 1];
+    filterRangeInPlace(arr, 1, 4);
+    console.log(arr);
+  </script>
+</body>
+
+</html>
