@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <title>전화번호 관리</title>
+  <style>
+    table {
+      width: 700px;
+    }
+
+    body {
+      width: 700px;
+    }
+
+    input {
+      height: 40px;
+    }
+
+    button {
+      height: 40px;
+    }
+
+    td {
+      width: 700px;
+    }
+  </style>
+</head>
+
+<body class="mx-auto">
+  <h2 class="text-center my-5">전화번호 관리</h2>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+
+  <form id="form-input" class="d-flex" onsubmit="return false">
+    <input id="txt-number" type="text" class="form-control me-2" placeholder="이름">
+    <input id="txt-number2" type="text" class="form-control me-2" placeholder="전화번호">
+    <input id="txt-number3" type="text" class="form-control me-2" placeholder="이메일">
+    <button id="btn-add" type="button" class="btn btn-primary text-nowrap">추가</button>
+  </form>
+  <table class="table table-striped">
+    <thead>
+      <th>이름</th>
+      <th>전화번호</th>
+      <th>이메일</th>
+      <th>작업</th>
+    </thead>
+    <tr id="td-list">
+    </tr>
+  </table>
+
+  <div id="example">
+
+  </div>
+  <script>
+    var ARRAY = []
+    function render(arr) {
+      // 삭제 버튼을 누르면 삭제함수 호출 
+      var loop = 0;
+      var emptyArray = [];
+      for (loop = 0; loop < arr.length; loop++) {
+        emptyArray.push(`
+        <tr>
+          <td>${arr[loop].name}</td>
+          <td>${arr[loop].tel}</td>
+          <td>${arr[loop].email}</td>
+          <td><button id="btn-sm" type="button" class="btn btn-outline-secondary btn-sm remove">삭제</button></td>
+        </tr>
+        `)
+      }
+      var div = document.getElementById("example")
+      const aa = '<table>' + '<tbody> \n' + emptyArray.join("\n") + '</tbody>' + '</table>'
+      div.innerHTML = aa;
+      console.log(aa);
+
+    }
+    // arr
+    // render([
+    //   { name: "123", tel: "0123123123", email: "준철@gmail" },
+    //   { name: "123", tel: "0123123123", email: "준철@gmail" },
+    //   { name: "123", tel: "0123123123", email: "준철@gmail" },
+    //   { name: "123", tel: "0123123123", email: "준철@gmail" }
+    // ])
+
+
+    // ARRAY의 변경을 감지해서 자동으로 Render를 호출 해주는 함수를 만들어
+    function buttonOnClick(event) {
+
+      const name = document.getElementById("txt-number").value
+      const tel = document.getElementById("txt-number2").value
+      const email = document.getElementById("txt-number3").value
+
+      console.log(name)
+      add({ name, tel, email })
+    }
+
+    const btnAdd = document.getElementById("btn-add");
+    btnAdd.addEventListener("click", buttonOnClick);
+
+    function add(obj) {
+      // {name: "", tel: "", email: ""}
+      ARRAY.push(obj)
+      render(ARRAY)
+    };
+
+    const btnSm = document.getElementById("btn-sm");
+    btnSm.addEventListener("click", remove);
+
+    function remove(id) {
+      ARRAY.remove(id)
+    }
+
+  </script>
+</body>
+
+</html>

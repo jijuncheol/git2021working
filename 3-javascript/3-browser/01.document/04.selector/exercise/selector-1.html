@@ -1,0 +1,98 @@
+<html>
+
+<body>
+  <form name="search">
+    <label>Search the site:
+      <input type="text" name="search">
+    </label>
+    <input type="submit" value="Search!">
+  </form>
+
+  <hr>
+
+  <form name="search-person">
+    Search the visitors:
+    <table id="age-table">
+      <tr>
+        <td>Age:</td>
+        <td id="age-list">
+          <label>
+            <input type="radio" name="age" value="young">less than 18</label>
+          <label>
+            <input type="radio" name="age" value="mature">18-50</label>
+          <label>
+            <input type="radio" name="age" value="senior">more than 50</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Additionally:</td>
+        <td>
+          <input type="text" name="info[0]">
+          <input type="text" name="info[1]">
+          <input type="text" name="info[2]">
+        </td>
+      </tr>
+
+    </table>
+
+    <input type="submit" value="Search!">
+    <script>
+      // const table = document.querySelector("#age-table");
+      // // console.log(table);
+
+      // const tdLabelList = document.querySelectorAll("td>label");
+      // // console.log(tdLabelList);
+
+      // const tdFirst = document.querySelector("tr>td:first-child");
+      // // console.log(tdFirst);
+
+      // const form = document.querySelector(".search");
+      // // console.log(form);
+
+      // const formFirst = document.querySelector("label>input:first-child");
+      // // console.log(formFirst);
+
+
+
+      const table = document.querySelector("#age-table");
+      // console.log(table);
+
+      const lables = table.querySelectorAll("label");
+      // console.log(lables);
+
+      const td = table.querySelector("td");
+      // console.log(td);
+
+      const form = document.querySelector('form[name="search"]');
+      // console.log(form);
+
+      const forms = document.querySelectorAll('form');
+      // console.log(forms);
+
+      // 첫번째 input만 배열에 넣음
+      const firstInput = [];
+      for (let form of forms) {
+        firstInputs.push(form.querySelector("input"));
+      }
+      // console.log(firstInput);
+
+      // 마지막 iuput만 배열에 넣음
+      const lastInputs = [];
+      for (let form of forms) {
+        // 각 폼에 있는 전체 input 목록
+        const inputs = form.querySelectorAll("input")
+        // 거기서 마지막꺼만
+        lastInputs.push(inputs[inputs.length - 1]);
+      }
+      console.log(lastInputs);
+
+
+
+
+
+    </script>
+  </form>
+</body>
+
+</html>
