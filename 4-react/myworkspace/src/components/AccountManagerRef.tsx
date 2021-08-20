@@ -72,6 +72,7 @@ const AccountManager = () => {
   return (
     <div>
       <h2>Account Manager</h2>
+      {/* 입력박스 1개, 금액 */}
       <button
         onClick={() => {
           transact("deposit");
