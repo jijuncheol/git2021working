@@ -1,16 +1,10 @@
 import { useRef, useState } from "react";
+import produce from "immer";
+import { FeedState } from "./type";
+
+import FeedEditModal from "./FeedEditModal";
 // import { lorem, penguin, robot } from "../common/data";
 // import { getTimeString } from "../common/lib/string";
-
-interface FeedState {
-  id: number;
-  content?: string | undefined;
-  dataUrl?: string | undefined;
-  fileType?: string | undefined;
-  createTime: number;
-  modifyTime?: number;
-  isEdit?: boolean;
-}
 
 const getTimeString = (unixtime: number) => {
   // Locale: timezone, currency 등
@@ -20,8 +14,10 @@ const getTimeString = (unixtime: number) => {
 };
 
 const Feed = () => {
+  console.log("--feedwithmodal--");
   const [feedList, setFeedList] = useState<FeedState[]>([]);
 
+  const [isEdit, setIsEdit] = useState(false);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -47,16 +43,19 @@ const Feed = () => {
   const post = (dataUrl: string | undefined, fileType: string | undefined) => {
     const feed: FeedState = {
       id: feedList.length > 0 ? feedList[0].id + 1 : 1,
-      // optional chaning
+
       content: textRef.current?.value,
       dataUrl: dataUrl,
       fileType: fileType,
       createTime: new Date().getTime(),
     };
 
-    setFeedList([feed, ...feedList]);
+    setFeedList(
+      produce((state) => {
+        state.unshift(feed);
+      })
+    );
 
-    // 입력값 초기화
     formRef.current?.reset();
   };
 
@@ -64,9 +63,42 @@ const Feed = () => {
     setFeedList(feedList.filter((item) => item.id !== id));
   };
 
+  const editItem = useRef<FeedState>({ id: 0, dataUrl: "", createTime: 0 });
+
+  const edit = (item: FeedState) => {
+    editItem.current = item
+    setIsEdit(true);
+  };
+
+  const save = (editItem: FeedState) => {
+    console.log(editItem);
+    setFeedList(
+      produce((state) => {
+        const item = state.find((item) => item.id === editItem.id);
+        if (item) {
+          item.dataUrl = editItem.dataUrl
+
+        }
+      })
+    );
+
+    setIsEdit(false);
+  };
+
   return (
     <>
       <h2 className="text-center my-5">Feeds</h2>
+      {isEdit && (
+        <FeedEditModal
+          item={editItem.current}
+          onClose={() => {
+            setIsEdit(false);
+          }}
+          onSave={(editItem) => {
+            save(editItem);
+          }}
+        />
+      )}
       <form
         className="mt-5"
         onSubmit={(e) => {
@@ -121,6 +153,15 @@ const Feed = () => {
                     )}
                   </span>
                 </div>
+                <a href="#!"
+                  className="link-secondary fs-6 text-nowrap me-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    edit(item);
+                  }}
+                >
+                  수정
+                </a>
                 <a
                   href="#!"
                   onClick={(e) => {
