@@ -73,6 +73,7 @@ const Contact = () => {
 
     const input = nameRef.current?.querySelectorAll("input")[index];
 
+
     setContactList(
       produce((state) => {
         const item = state.find((item) => item.id === id);

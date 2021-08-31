@@ -1,27 +1,26 @@
 import { useRef, useState } from "react";
 import produce from "immer";
-import { FeedState } from "./type";
-
 import FeedEditModal from "./FeedEditModal";
-// import { lorem, penguin, robot } from "../common/data";
-// import { getTimeString } from "../common/lib/string";
+import { FeedItemState } from "./type";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import style from "./Profile.module.scss";
+
 
 const getTimeString = (unixtime: number) => {
-  // Locale: timezone, currency 등
-  // js에서는 브라우저의 정보를 이용함
+
   const dateTime = new Date(unixtime);
   return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
 };
 
 const Feed = () => {
-  console.log("--feedwithmodal--");
-  const [feedList, setFeedList] = useState<FeedState[]>([]);
+  const profile = useSelector((state: RootState) => state.profile);
+  const [feedList, setFeedList] = useState<FeedItemState[]>([]);
 
-  const [isEdit, setIsEdit] = useState(false);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
+  const [isEdit, setIsEdit] = useState(false);
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     if (e) {
       if (e.code !== "Enter") return;
@@ -30,19 +29,24 @@ const Feed = () => {
     if (fileRef.current?.files?.length) {
       const file = fileRef.current?.files[0];
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+
 
       reader.onload = () => {
         post(reader.result?.toString(), file.type);
+        console.log("1");
       };
+      reader.readAsDataURL(file);
+
+      console.log("2");
     } else {
       post(undefined, undefined);
     }
   };
 
   const post = (dataUrl: string | undefined, fileType: string | undefined) => {
-    const feed: FeedState = {
+    const feed: FeedItemState = {
       id: feedList.length > 0 ? feedList[0].id + 1 : 1,
+      username: profile.username,
 
       content: textRef.current?.value,
       dataUrl: dataUrl,
@@ -50,11 +54,7 @@ const Feed = () => {
       createTime: new Date().getTime(),
     };
 
-    setFeedList(
-      produce((state) => {
-        state.unshift(feed);
-      })
-    );
+    setFeedList([feed, ...feedList]);
 
     formRef.current?.reset();
   };
@@ -63,30 +63,33 @@ const Feed = () => {
     setFeedList(feedList.filter((item) => item.id !== id));
   };
 
-  const editItem = useRef<FeedState>({ id: 0, dataUrl: "", createTime: 0 });
+  const editItem = useRef<FeedItemState>({
+    id: 0,
+    content: "",
+    dataUrl: "",
+    username: profile.username,
+    createTime: 0,
+  });
 
-  const edit = (item: FeedState) => {
-    editItem.current = item
+  const edit = (item: FeedItemState) => {
+    editItem.current = item;
     setIsEdit(true);
   };
-
-  const save = (editItem: FeedState) => {
+  const save = (editItem: FeedItemState) => {
     console.log(editItem);
     setFeedList(
       produce((state) => {
-        const item = state.find((item) => item.id === editItem.id);
+        const item = state.find((item: { id: number; }) => item.id === editItem.id);
         if (item) {
-          item.dataUrl = editItem.dataUrl
-
+          item.content = editItem.content
+          item.dataUrl = editItem.dataUrl;
         }
       })
     );
-
     setIsEdit(false);
   };
-
   return (
-    <>
+    <div style={{ width: "40vw" }} className="mx-auto">
       <h2 className="text-center my-5">Feeds</h2>
       {isEdit && (
         <FeedEditModal
@@ -110,7 +113,7 @@ const Feed = () => {
           className="form-control mb-1"
           placeholder="Leave a post here"
           ref={textRef}
-          style={{ boxSizing: "border-box", height: "15vh" }}
+          style={{ height: "15vh" }}
         ></textarea>
         <div className="d-flex">
           <input
@@ -133,6 +136,15 @@ const Feed = () => {
       <div className="mt-3">
         {feedList.map((item) => (
           <div className="card mt-1" key={item.id}>
+            <div className="d-flex">
+              <div
+                className={`${style.thumb} me-1`}
+                style={{ backgroundImage: `url(${profile.image})` }}
+              ></div>
+              <span className={`${style.username}`}>
+                {item.username}
+              </span>
+            </div>
             {item.fileType &&
               (item.fileType?.includes("image") ? (
                 <img
@@ -153,22 +165,23 @@ const Feed = () => {
                     )}
                   </span>
                 </div>
-                <a href="#!"
-                  className="link-secondary fs-6 text-nowrap me-2"
+                <a
+                  href="#!"
                   onClick={(e) => {
                     e.preventDefault();
                     edit(item);
                   }}
+                  className="btn btn-outline-secondary btn-sm text-nowrap me-1"
                 >
                   수정
                 </a>
                 <a
                   href="#!"
                   onClick={(e) => {
-                    e.preventDefault(); // 기본 동작 방지
+                    e.preventDefault();
                     del(item.id);
                   }}
-                  className="link-secondary fs-6 text-nowrap"
+                  className="btn btn-outline-secondary btn-sm text-nowrap me-1"
                 >
                   삭제
                 </a>
@@ -177,7 +190,7 @@ const Feed = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

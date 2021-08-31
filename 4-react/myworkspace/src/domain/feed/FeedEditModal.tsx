@@ -1,34 +1,48 @@
 import { useRef, useState } from "react";
-import { FeedState } from "./type";
-// import { lorem, penguin, robot } from "../common/data";
-// import { getTimeString } from "../common/lib/string";
+import { FeedItemState } from "./type";
 
 interface ModalProp {
-  item: FeedState;
+  item: FeedItemState;
   onClose: () => void;
-  onSave: (editItem: FeedState) => void;
+  onSave: (editItem: FeedItemState) => void;
 }
 
 const FeedEditModal = ({ item, onClose, onSave }: ModalProp) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [url, setUrl] = useState(item.dataUrl)
 
-  const save = () => {
-    const feed: FeedState = {
+  const change = () => {
+    if (inputRef.current?.files?.length) {
+      const file = inputRef.current?.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const baseUrl = reader.result?.toString();
+        setUrl(baseUrl);
+      };
+    };
+  };
+
+  const save = (dataUrl: string | undefined) => {
+    const feed: FeedItemState = {
       id: item.id,
       content: textRef.current?.value,
-
       createTime: item.createTime,
+      username: item.username,
+      dataUrl: dataUrl
+
     };
+
     onSave(feed);
-  }
+  };
 
   return (
     <div
       className="modal d-block"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       onClick={() => {
-        onClose();
       }}
     >
       <div className="modal-dialog">
@@ -44,51 +58,60 @@ const FeedEditModal = ({ item, onClose, onSave }: ModalProp) => {
               }}
             ></button>
           </div>
-          <div className="modal-body">
+          <div className="modal-body" key={item.id}>
+            {item.fileType &&
+              (item.fileType?.includes("image") ? (
+                <img
+                  src={url}
+                  className="card-img-top"
+                  alt={item.content}
+                />
+              ) : (
+                <video className="card-img-top" controls>
+                  <source
+                    src={url}
+                    type={"Video/mp4"}></source>
+                </video>
+              ))}
+            <textarea
+              className="form-control mb-1"
+              placeholder="Leave a post here"
+              style={{ boxSizing: "border-box", height: "15vh" }}
+              defaultValue={item.content}
+              ref={textRef}
+            />
             <input
               type="file"
               className="form-control me-1"
               accept="image/png, image/jpeg, video/mp4"
-              ref={fileRef}
-            />
-            <textarea
-              className="form-control mb-1"
-              defaultValue={item.content}
-              ref={textRef}>
-            </textarea>
-            <img
-              src={item.dataUrl}
-              className="card-img-top"
+              onChange={(e) => {
+                e.preventDefault();
+                change();
+              }}
+              ref={inputRef}
             />
           </div>
           <div className="modal-footer">
-            <button
-              type="button"
+            <button type="button"
               className="btn btn-secondary"
-              onClick={(e) => {
-                e.preventDefault()
+              data-bs-dismiss="modal"
+              onClick={() => {
                 onClose();
               }}
-            >
-              닫기
-            </button>
-            <button
-              type="button"
+            >닫기</button>
+            <button type="button"
               className="btn btn-primary"
-              onClick={(e) => {
-                e.preventDefault()
-                save();
+              onClick={() => {
+                save(url);
               }}
-            >
-              저장
-            </button>
-
+            >저장</button>
           </div>
         </div>
       </div>
     </div>
-  );
-}
+  )
+};
+
 
 
 
