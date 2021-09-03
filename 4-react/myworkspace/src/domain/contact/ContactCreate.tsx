@@ -17,14 +17,14 @@ const ContactCreate = () => {
   const history = useHistory();
 
   const handleAddClick = () => {
-    const contact: ContactItem = {
+    const item: ContactItem = {
       id: contactData.length ? contactData[0].id + 1 : 1,
       name: nameInput.current ? nameInput.current.value : "",
       phone: phoneInput.current ? phoneInput.current.value : "",
       email: emailInput.current ? emailInput.current.value : "",
       createdTime: new Date().getTime(),
     };
-    dispatch(addContact(contact));
+    dispatch(addContact(item));
     history.push("/contacts");
   };
 

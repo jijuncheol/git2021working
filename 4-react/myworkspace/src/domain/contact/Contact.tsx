@@ -15,7 +15,7 @@ const Contact = () => {
   const history = useHistory();
 
   return (
-    <div>
+    <div style={{ width: "40vw" }} className="mx-auto">
       <h2 className="text-center">Contact</h2>
       <div className="d-flex justify-content-end mb-2">
         <button

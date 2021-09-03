@@ -17,7 +17,7 @@ interface ContactState {
 const initialState: ContactState = {
   data: [
     {
-      id: 2,
+      id: 1,
       name: "JunCheol Jl",
       phone: "010-3137-0322",
       email: "flix1242@naver.com",
