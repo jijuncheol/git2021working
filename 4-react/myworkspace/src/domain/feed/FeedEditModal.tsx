@@ -31,6 +31,7 @@ const FeedEditModal = ({ item, onClose, onSave }: ModalProp) => {
       content: textRef.current?.value,
       createTime: item.createTime,
       username: item.username,
+      image: item.content,
       dataUrl: dataUrl
 
     };

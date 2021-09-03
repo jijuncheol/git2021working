@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import Alert from "./base/Alert";
 
 import produce from "immer";
 
@@ -14,8 +13,20 @@ interface ContactState {
 const Contact = () => {
 
   const [contactList, setContactList] = useState<ContactState[]>([
+    {
+      id: 2,
+      name: "JunCheol Jl",
+      phone: "010-3137-0322",
+      email: "flix1242@naver.com",
+    },
+    {
+      id: 1,
+      name: "JunCheol Jl",
+      phone: "010-3137-0322",
+      email: "flix1242@naver.com",
+    },
   ]);
-  const [isError, setIsError] = useState(false);
+  const [, setIsError] = useState(false);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -90,7 +101,7 @@ const Contact = () => {
 
   return (
     <>
-      <h2 className="text-center my-5">전화번호 관리</h2>
+      <h2 className="text-center my-5">연락처 관리</h2>
       <form
         className="d-flex"
         ref={formRef}
@@ -136,15 +147,6 @@ const Contact = () => {
           추가
         </button>
       </form>
-      {isError && (
-        <Alert
-          message={"내용을 입력해주세요."}
-          variant={"danger"}
-          onClose={() => {
-            setIsError(false);
-          }}
-        />
-      )}
       <table className="table table-striped" ref={tableRef}>
         <thead>
           <th>이름</th>
@@ -207,7 +209,6 @@ const Contact = () => {
               </button>
             )}
           </tbody>
-
         ))}
       </table>
     </>

@@ -33,11 +33,9 @@ const Feed = () => {
 
       reader.onload = () => {
         post(reader.result?.toString(), file.type);
-        console.log("1");
       };
       reader.readAsDataURL(file);
 
-      console.log("2");
     } else {
       post(undefined, undefined);
     }
@@ -47,10 +45,10 @@ const Feed = () => {
     const feed: FeedItemState = {
       id: feedList.length > 0 ? feedList[0].id + 1 : 1,
       username: profile.username,
-
       content: textRef.current?.value,
       dataUrl: dataUrl,
       fileType: fileType,
+      image: profile.image,
       createTime: new Date().getTime(),
     };
 
@@ -69,6 +67,7 @@ const Feed = () => {
     dataUrl: "",
     username: profile.username,
     createTime: 0,
+    image: profile.image,
   });
 
   const edit = (item: FeedItemState) => {
@@ -137,13 +136,17 @@ const Feed = () => {
         {feedList.map((item) => (
           <div className="card mt-1" key={item.id}>
             <div className="d-flex">
-              <div
-                className={`${style.thumb} me-1`}
-                style={{ backgroundImage: `url(${profile.image})` }}
-              ></div>
-              <span className={`${style.username}`}>
-                {item.username}
-              </span>
+              <div>
+                <img
+                  className={`${style.thumb} me-1`}
+                  src={item.image}
+                  alt={item.username}
+                  style={{ backgroundImage: `url(${profile.image})` }}
+                />
+                <span className={`${style.username}`}>
+                  {item.username}
+                </span>
+              </div>
             </div>
             {item.fileType &&
               (item.fileType?.includes("image") ? (

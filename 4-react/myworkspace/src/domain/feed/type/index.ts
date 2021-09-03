@@ -8,5 +8,6 @@ interface FeedItemState {
   createTime: number;
   modifyTime?: number;
   isEdit?: boolean;
+  image: string | undefined;
 }
 export type { FeedItemState };
