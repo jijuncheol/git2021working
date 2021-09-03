@@ -12,6 +12,7 @@ import { store } from "./store"; // redux store
 import Home from "./domain/Home";
 import Profile from "./domain/profile/Profile";
 
+
 // SPA(Single Page Application)
 // : 페이지 파일이 1개, index.html
 // : 특정 영역(Switch)에 컴포넌트(js)를 로딩함
@@ -22,8 +23,12 @@ import Profile from "./domain/profile/Profile";
 // 컴포넌트를 방문하는 시점에 로딩함
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/Contact"))
-const Photo = lazy(() => import("./domain/Photo"));
+const Contact = lazy(() => import("./domain/contact/Contact"));
+const ContactCreate = lazy(() => import("./domain/contact/ContactCreate"));
+const Photo = lazy(() => import("./domain/photo/Photo"));
+const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
 
 // React == 컴포넌트 개발 라이브러리
 function App() {
@@ -36,7 +41,7 @@ function App() {
             <Profile />
           </header>
           <nav className="drawer-menu position-fixed bg-light shadow-sm">
-            <h3 className="ms-2">MY WORKSPACE</h3>
+            <h4 className="ms-2">MY WORKSPACE</h4>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -66,8 +71,13 @@ function App() {
                 <Route path="/" component={Home} exact />
                 <Route path="/todo" component={Todo} />
                 <Route path="/feeds" component={Feed} />
-                <Route path="/contact" component={Contact} />
-                <Route path="/photos" component={Photo} />
+                <Route path="/contacts" component={Contact} />
+                <Route path="/contacts/create" component={ContactCreate} />
+                <Route path="/photos" component={Photo} exact />
+                <Route path="/photos/create" component={PhotoCreate} />
+                {/* id라는 매개변수를 url 경로에 넘김, path parameter */}
+                <Route path="/photos/edit/:id" component={PhotoEdit} />
+                <Route path="/photos/detail/:id" component={PhotoDetail} />
               </Switch>
             </Suspense>
           </main>
