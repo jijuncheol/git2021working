@@ -9,9 +9,8 @@ import { Suspense, lazy } from "react";
 import { Provider } from "react-redux"; // react 앱에 redux store를 제공해줌
 import { store } from "./store"; // redux store
 
-import Home from "./domain/Home";
-import Profile from "./domain/profile/Profile";
-
+import Home from "./features/Home";
+import Profile from "./features/profile/Profile";
 
 // SPA(Single Page Application)
 // : 페이지 파일이 1개, index.html
@@ -21,14 +20,16 @@ import Profile from "./domain/profile/Profile";
 
 // Lazy-Loading 처리
 // 컴포넌트를 방문하는 시점에 로딩함
-const Todo = lazy(() => import("./domain/todo/Todo"));
-const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/contact/Contact"));
-const ContactCreate = lazy(() => import("./domain/contact/ContactCreate"));
-const Photo = lazy(() => import("./domain/photo/Photo"));
-const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
-const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
-const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
+const Todo = lazy(() => import("./features/todo/TodoInlineEdit"));
+const Feed = lazy(() => import("./features/feed/Feed"));
+const Photo = lazy(() => import("./features/photo/Photo"));
+const PhotoCreate = lazy(() => import("./features/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./features/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./features/photo/PhotoEdit"));
+const Contact = lazy(() => import("./features/contact/Contact"));
+const ContactCreate = lazy(() => import("./features/contact/ContactCreate"));
+const ContactDetail = lazy(() => import("./features/contact/ContactDetail"));
+const ContactEdit = lazy(() => import("./features/contact/ContactEdit"));
 
 // React == 컴포넌트 개발 라이브러리
 function App() {
@@ -41,7 +42,7 @@ function App() {
             <Profile />
           </header>
           <nav className="drawer-menu position-fixed bg-light shadow-sm">
-            <h4 className="ms-2">MY WORKSPACE</h4>
+            <h4 className="ms-2 my-2">MY WORKSPACE</h4>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -53,10 +54,10 @@ function App() {
                 <Link to="/feeds">Feeds</Link>
               </li>
               <li>
-                <Link to="/contact">Contact</Link>
+                <Link to="/photos">Photos</Link>
               </li>
               <li>
-                <Link to="/photos">Photos</Link>
+                <Link to="/contacts">Contacts</Link>
               </li>
             </ul>
           </nav>
@@ -68,16 +69,19 @@ function App() {
                 {/* Switch 영역에 컴포넌트가 로딩됨 */}
 
                 {/* 해당 경로에 대해서 로딩할 컴포넌트 목록을 작성 */}
+                {/* exact: 속성은 true/false, 경로가 정확히 일치할때만 */}
                 <Route path="/" component={Home} exact />
                 <Route path="/todo" component={Todo} />
                 <Route path="/feeds" component={Feed} />
-                <Route path="/contacts" component={Contact} />
-                <Route path="/contacts/create" component={ContactCreate} />
                 <Route path="/photos" component={Photo} exact />
                 <Route path="/photos/create" component={PhotoCreate} />
                 {/* id라는 매개변수를 url 경로에 넘김, path parameter */}
-                <Route path="/photos/edit/:id" component={PhotoEdit} />
                 <Route path="/photos/detail/:id" component={PhotoDetail} />
+                <Route path="/photos/edit/:id" component={PhotoEdit} />
+                <Route path="/contacts" component={Contact} exact />
+                <Route path="/contacts/create" component={ContactCreate} />
+                <Route path="/contacts/detail/:id" component={ContactDetail} />
+                <Route path="/contacts/edit/:id" component={ContactEdit} />
               </Switch>
             </Suspense>
           </main>
